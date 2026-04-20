@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Marilina Info</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; }
+        body {
+            margin: 0; padding: 20px; font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+            background: linear-gradient(180deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            background-attachment: fixed; color: white; display: flex; justify-content: center;
+        }
+        .card {
+            width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px; padding: 25px; border: 1px solid rgba(255,255,255,0.2);
+            text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .flags-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 20px; }
+        .flag-btn { font-size: 32px; cursor: pointer; filter: grayscale(0.9); transition: 0.3s; padding: 5px; -webkit-tap-highlight-color: transparent; }
+        .flag-btn.active { filter: grayscale(0); transform: scale(1.15); border-bottom: 2px solid var(--gold); }
+        
+        h1 { color: var(--gold); letter-spacing: 3px; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 2.2rem; }
+        .intro {
+            background: rgba(0,0,0,0.4); padding: 18px; border-radius: 15px;
+            border-left: 5px solid var(--gold); font-style: italic; text-align: left;
+            line-height: 1.6; margin-bottom: 25px; font-size: 0.95rem;
+        }
+        .menu-btn {
+            background: rgba(255,255,255,0.1); width: 100%; border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 16px; margin-bottom: 12px; border-radius: 15px; color: white;
+            font-weight: bold; font-size: 1rem; cursor: pointer; display: flex;
+            align-items: center; gap: 12px; outline: none; -webkit-tap-highlight-color: transparent;
+        }
+        .menu-btn i, .menu-btn span { pointer-events: none; }
+
+        #overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); z-index: 99999; justify-content: center; align-items: center;
+        }
+        .popup {
+            background: white; color: #222; width: 88%; max-width: 320px;
+            border-radius: 20px; overflow: hidden; position: relative;
+        }
+        .p-head { background: linear-gradient(to right, #1a2a6c, #801313); color: white; padding: 18px; font-weight: bold; }
+        .p-text { padding: 25px; line-height: 1.7; font-size: 1.05rem; }
+        .close-x { position: absolute; top: 10px; right: 15px; color: white; font-size: 35px; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="flags-row">
+            <div class="flag-btn active" data-l="el">🇬🇷</div>
+            <div class="flag-btn" data-l="en">🇬🇧</div>
+            <div class="flag-btn" data-l="fr">🇫🇷</div>
+            <div class="flag-btn" data-l="de">🇩🇪</div>
+        </div>
+
+        <h1 id="n-val">ΜΑΡΙΛΙΝΑ</h1>
+        <div id="i-val" class="intro">"Μαριλίνα: Η μελωδική χάρη. Ένας αρμονικός συνδυασμός που συμβολίζει την αγάπη, τη λάμψη και την εσωτερική ομορφιά που ακτινοβολεί."</div>
+
+        <button class="menu-btn" data-i="0"><i class="fas fa-scroll"></i> <span id="b0">Ετυμολογία & Σημασία</span></button>
+        <button class="menu-btn" data-i="1"><i class="fas fa-music"></i> <span id="b1">Σύμβολο Αρμονίας</span></button>
+        <button class="menu-btn" data-i="2"><i class="fas fa-cross"></i> <span id="b2">Θρησκευτική Ρίζα</span></button>
+        <button class="menu-btn" data-i="3"><i class="fas fa-sparkles"></i> <span id="b3">Προσωπικότητα</span></button>
+    </div>
+
+    <div id="overlay">
+        <div class="popup">
+            <div class="close-x">&times;</div>
+            <div id="p-t" class="p-head"></div>
+            <div id="p-d" class="p-text"></div>
+        </div>
+    </div>
+
+    <script>
+        const repo = {
+            el: { n: "ΜΑΡΙΛΙΝΑ", i: '"Μαριλίνα: Η μελωδική χάρη. Ένας αρμονικός συνδυασμός που συμβολίζει την αγάπη, τη λάμψη και την εσωτερική ομορφιά που ακτινοβολεί."', b: ["Ετυμολογία & Σημασία", "Σύμβολο Αρμονίας", "Θρησκευτική Ρίζα", "Προσωπικότητα"], d: ["Σύνθετο όνομα από το Μαρία (αγαπημένη) και το Λίνα (σύντμηση ονομάτων όπως Αγγελίνα ή Καρολίνα). Σημαίνει την αγαπημένη και γεμάτη φως ύπαρξη.", "Αντιπροσωπεύει τη σύγχρονη γυναίκα που συνδυάζει την παράδοση με τη φρεσκάδα. Ένα όνομα γεμάτο ρυθμό και θετική ενέργεια.", "Φέρει την ευλογία της Παναγίας (Μαρία), συνδυασμένη με την αγγελική υπόσταση που υποδηλώνει η κατάληξη -λίνα.", "Μια Μαριλίνα διακρίνεται για τη ζωντάνια της, το καλλιτεχνικό της πνεύμα και τη μοναδική της ικανότητα να γοητεύει με την ευγένεια και το χαμόγελό της."] },
+            en: { n: "MARILINA", i: '"Marilina: The melodic grace. A harmonic blend symbolizing love, brilliance, and inner beauty that radiates."', b: ["Etymology & Meaning", "Symbol of Harmony", "Religious Roots", "Personality"], d: ["A compound name from Maria (beloved) and Lina (diminutive of names like Angelina or Carolina). It signifies a radiant and cherished being.", "It represents the modern woman who combines tradition with freshness. A name full of rhythm and positive energy.", "It carries the blessing of the Virgin Mary, combined with the angelic essence suggested by the suffix -lina.", "A Marilina is known for her vitality, her artistic spirit, and her unique ability to charm others with her kindness and smile."] },
+            fr: { n: "MARILINA", i: '"Marilina : la grâce mélodique. Un mélange harmonieux symbolisant l\'amour, l\'éclat et la beauté intérieure."', b: ["Étymologie", "Symbole d'Harmonie", "Racines Religieuses", "Personnalité"], d: ["Nom composé de Maria (aimée) et Lina. Signifie une existence radieuse et chérie, pleine de douceur.", "Représente la femme moderne alliant tradition και fraîcheur. Un nom plein de rythme et d'énergie positive.", "Porte la bénédiction de la Vierge Marie associée à une essence angélique.", "Marilina se distingue par sa vitalité, son esprit artistique και sa capacité à charmer par sa gentillesse."] },
+            de: { n: "MARILINA", i: '"Marilina: Die melodische Gnade. Eine harmonische Mischung, die Liebe, Glanz und strahlende innere Schönheit symbolisiert."', b: ["Etymologie", "Symbol der Harmonie", "Tradition", "Persönlichkeit"], d: ["Ein zusammengesetzter Name aus Maria (die Geliebte) und Lina. Er steht für ein lichtvolles und geliebtes Wesen.", "Er verkörpert die moderne Frau, die Tradition mit Frische verbindet. Ein Name voller Rhythmus und positiver Energie.", "Verbindet den Segen Marias mit einer fast engelhaften Note.", "Eine Marilina zeichnet sich durch ihre Lebendigkeit, ihren künstlerischen Sinn und ihre gewinnende Art aus."] }
+        };
+
+        let activeL = 'el';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const view = document.getElementById('overlay');
+
+            document.addEventListener('click', (e) => {
+                const f = e.target.closest('.flag-btn');
+                const m = e.target.closest('.menu-btn');
+                const c = e.target.closest('.close-x') || e.target === view;
+
+                if (f) {
+                    activeL = f.getAttribute('data-l');
+                    document.querySelectorAll('.flag-btn').forEach(el => el.classList.remove('active'));
+                    f.classList.add('active');
+                    document.getElementById('n-val').innerText = repo[activeL].n;
+                    document.getElementById('i-val').innerText = repo[activeL].i;
+                    for(let k=0; k<4; k++) document.getElementById('b'+k).innerText = repo[activeL].b[k];
+                }
+                
+                if (m) {
+                    const idx = m.getAttribute('data-i');
+                    document.getElementById('p-t').innerText = repo[activeL].b[idx];
+                    document.getElementById('p-d').innerText = repo[activeL].d[idx];
+                    view.style.display = 'flex';
+                }
+                
+                if (c) view.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
